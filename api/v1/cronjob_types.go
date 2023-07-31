@@ -48,8 +48,8 @@ type CronJobSpec struct {
 
 // CronJobStatus defines the observed state of CronJob
 type CronJobStatus struct {
-	LastScheduleTime *metav1.Time
-	Active           []corev1.ObjectReference
+	LastScheduleTime *metav1.Time             `json:"last_schedule_time,omitempty"`
+	Active           []corev1.ObjectReference `json:"active,omitempty"`
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
