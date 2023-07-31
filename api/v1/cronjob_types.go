@@ -17,8 +17,16 @@ limitations under the License.
 package v1
 
 import (
+	kbatch "k8s.io/api/batch/v1"
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
+
+type JobTemplate struct {
+	Spec        kbatch.JobSpec    `json:"spec,omitempty"`
+	Annotations map[string]string `json:"annotations,omitempty"`
+	Labels      map[string]string `json:"labels,omitempty"`
+}
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
@@ -27,13 +35,21 @@ import (
 type CronJobSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-
+	Suspend                    *bool       `json:"suspend,omitempty"`
+	Schedule                   string      `json:"schedule,omitempty"`
+	StartingDeadlineSeconds    *int64      `json:"startingDeadlineSeconds,omitempty"`
+	FailedJobsHistoryLimit     *int32      `json:"failed_jobs_history_limit,omitempty"`
+	SuccessfulJobsHistoryLimit *int32      `json:"successful_jobs_hostory_limit,omitempty"`
+	ConcurrencyPolicy          string      `json:"concurrency_policy,omitempty"`
+	JobTemplate                JobTemplate `json:"job_template,omitempty"`
 	// Foo is an example field of CronJob. Edit cronjob_types.go to remove/update
 	Foo string `json:"foo,omitempty"`
 }
 
 // CronJobStatus defines the observed state of CronJob
 type CronJobStatus struct {
+	LastScheduleTime *metav1.Time
+	Active           []corev1.ObjectReference
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
