@@ -34,16 +34,16 @@ spec:
           spec:
             description: CronJobSpec defines the desired state of CronJob
             properties:
-              concurrency_policy:
+              concurrencyPolicy:
                 type: string
-              failed_jobs_history_limit:
+              failedJobsHistoryLimit:
                 format: int32
                 type: integer
               foo:
                 description: Foo is an example field of CronJob. Edit cronjob_types.go
                   to remove/update
                 type: string
-              job_template:
+              jobTemplate:
                 properties:
                   annotations:
                     additionalProperties:
@@ -8641,7 +8641,7 @@ spec:
               startingDeadlineSeconds:
                 format: int64
                 type: integer
-              successful_jobs_hostory_limit:
+              successfulJobsHistoryLimit:
                 format: int32
                 type: integer
               suspend:

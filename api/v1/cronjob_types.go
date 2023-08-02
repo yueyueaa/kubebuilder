@@ -38,10 +38,10 @@ type CronJobSpec struct {
 	Suspend                    *bool       `json:"suspend,omitempty"`
 	Schedule                   string      `json:"schedule,omitempty"`
 	StartingDeadlineSeconds    *int64      `json:"startingDeadlineSeconds,omitempty"`
-	FailedJobsHistoryLimit     *int32      `json:"failed_jobs_history_limit,omitempty"`
-	SuccessfulJobsHistoryLimit *int32      `json:"successful_jobs_hostory_limit,omitempty"`
-	ConcurrencyPolicy          string      `json:"concurrency_policy,omitempty"`
-	JobTemplate                JobTemplate `json:"job_template,omitempty"`
+	FailedJobsHistoryLimit     *int32      `json:"failedJobsHistoryLimit,omitempty"`
+	SuccessfulJobsHistoryLimit *int32      `json:"successfulJobsHistoryLimit,omitempty"`
+	ConcurrencyPolicy          string      `json:"concurrencyPolicy,omitempty"`
+	JobTemplate                JobTemplate `json:"jobTemplate,omitempty"`
 	// Foo is an example field of CronJob. Edit cronjob_types.go to remove/update
 	Foo string `json:"foo,omitempty"`
 }
