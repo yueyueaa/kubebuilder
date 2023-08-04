@@ -163,5 +163,5 @@ $(ENVTEST): $(LOCALBIN)
 	test -s $(LOCALBIN)/setup-envtest || GOBIN=$(LOCALBIN) go install sigs.k8s.io/controller-runtime/tools/setup-envtest@latest
 
 # .PHONY: ko-image
-ko-image: 
-	KO_DOCKER_REPO=localhost:5000 ko build cmd/main.go
+ko-image: ## KO_DOCKER_REPO=localhost:5000 ko build cmd/main.go -t ${IMG}
+	KO_DOCKER_REPO=localhost:5000 ko build . -B -t latest

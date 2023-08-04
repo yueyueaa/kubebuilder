@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/created-by: yueyuea
     app.kubernetes.io/part-of: yueyuea
     app.kubernetes.io/managed-by: kustomize
-  name: system
+  name: default
 ---
 apiVersion: apps/v1
 kind: Deployment

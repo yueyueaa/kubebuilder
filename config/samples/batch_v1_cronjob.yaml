@@ -8,6 +8,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: yueyuea
   name: cronjob-sample
+  namespace: cert-manager
 spec:
   schedule: "*/1 * * * *"
   startingDeadlineSeconds: 60

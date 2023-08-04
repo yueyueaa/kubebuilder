@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: controller-manager
-  namespace: system
+  namespace: default
 spec:
   template:
     spec:
@@ -15,7 +15,7 @@ spec:
           capabilities:
             drop:
               - "ALL"
-        image: dev:5000/kube-code-generator:v1.26.0
+        image: devk8s/gcr-io_kubebuilder_kube-rbac-proxy:v0.13.1
         args:
         - "--secure-listen-address=0.0.0.0:8443"
         - "--upstream=http://127.0.0.1:8080/"
