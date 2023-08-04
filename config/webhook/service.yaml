@@ -4,13 +4,13 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/name: service
-    app.kubernetes.io/instance: webhook-service
+    app.kubernetes.io/instance: denyenv
     app.kubernetes.io/component: webhook
     app.kubernetes.io/created-by: yueyuea
     app.kubernetes.io/part-of: yueyuea
     app.kubernetes.io/managed-by: kustomize
-  name: webhook-service
-  namespace: system
+  name: denyenv
+  namespace: default
 spec:
   ports:
     - port: 443

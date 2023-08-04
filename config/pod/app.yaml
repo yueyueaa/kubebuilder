@@ -3,8 +3,8 @@ kind: Pod
 metadata:
   creationTimestamp: "2023-08-02T06:37:13Z"
   labels:
-    run: test
-  name: test
+    run: app
+  name: app
   namespace: default
   resourceVersion: "1021"
   uid: acbf3fd3-efa9-4928-ada1-5330643a70ec
@@ -12,7 +12,7 @@ spec:
   containers:
   - image: localhost:5000/main.go-3002d695552ec7e7ebbaaf04a21d3439:latest
     imagePullPolicy: Always
-    name: test
+    name: app
     resources: {}
     terminationMessagePath: /dev/termination-log
     terminationMessagePolicy: File

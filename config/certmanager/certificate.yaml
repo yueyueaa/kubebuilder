@@ -1,6 +1,44 @@
 # The following manifests contain a self-signed issuer CR and a certificate CR.
 # More document can be found at https://docs.cert-manager.io
 # WARNING: Targets CertManager v1.0. Check https://cert-manager.io/docs/installation/upgrading/ for breaking changes.
+# apiVersion: cert-manager.io/v1
+# kind: Issuer
+# metadata:
+#   labels:
+#     app.kubernetes.io/name: certificate
+#     app.kubernetes.io/instance: serving-cert
+#     app.kubernetes.io/component: certificate
+#     app.kubernetes.io/created-by: yueyuea
+#     app.kubernetes.io/part-of: yueyuea
+#     app.kubernetes.io/managed-by: kustomize
+#   name: selfsigned-issuer
+#   namespace: cert-manager
+# spec:
+#   selfSigned: {}
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   labels:
+#     app.kubernetes.io/name: certificate
+#     app.kubernetes.io/instance: serving-cert
+#     app.kubernetes.io/component: certificate
+#     app.kubernetes.io/created-by: yueyuea
+#     app.kubernetes.io/part-of: yueyuea
+#     app.kubernetes.io/managed-by: kustomize
+#   name: serving-cert  # this name should match the one appeared in kustomizeconfig.yaml
+#   namespace: cert-manager
+# spec:
+#   # SERVICE_NAME and SERVICE_NAMESPACE will be substituted by kustomize
+#   dnsNames:
+#   - SERVICE_NAME.SERVICE_NAMESPACE.svc
+#   - SERVICE_NAME.SERVICE_NAMESPACE.svc.cluster.local
+#   issuerRef:
+#     kind: Issuer
+#     name: selfsigned-issuer
+#   secretName: webhook-server-cert # this secret will not be prefixed, since it's not managed by kustomize
+
+
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
@@ -11,8 +49,8 @@ metadata:
     app.kubernetes.io/created-by: yueyuea
     app.kubernetes.io/part-of: yueyuea
     app.kubernetes.io/managed-by: kustomize
-  name: selfsigned-issuer
-  namespace: system
+  name: denyenv-selfsigned-issuer
+  namespace: default
 spec:
   selfSigned: {}
 ---
@@ -26,14 +64,30 @@ metadata:
     app.kubernetes.io/created-by: yueyuea
     app.kubernetes.io/part-of: yueyuea
     app.kubernetes.io/managed-by: kustomize
-  name: serving-cert  # this name should match the one appeared in kustomizeconfig.yaml
-  namespace: system
+  name: denyenv-tls-secret
 spec:
-  # SERVICE_NAME and SERVICE_NAMESPACE will be substituted by kustomize
+  duration: 8760h
+  renewBefore: 8000h
+  subject:
+    organizations:
+      - zeng.dev
+  commonName: denyenv.default
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
   dnsNames:
-  - SERVICE_NAME.SERVICE_NAMESPACE.svc
-  - SERVICE_NAME.SERVICE_NAMESPACE.svc.cluster.local
+    - denyenv
+    - denyenv.default
+    - denyenv.default.svc
+  ipAddresses:
+    - 192.168.1.10 # change it to your IP addresses
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
-  secretName: webhook-server-cert # this secret will not be prefixed, since it's not managed by kustomize
+    name: denyenv-selfsigned-issuer
+  secretName: denyenv-tls-secret

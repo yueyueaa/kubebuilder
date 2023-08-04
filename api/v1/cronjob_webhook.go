@@ -48,6 +48,7 @@ var _ webhook.Defaulter = &CronJob{}
 
 // Default implements webhook.Defaulter so a webhook will be registered for the type
 func (r *CronJob) Default() {
+	cronjoblog.Info("cronjob webhook starting...")
 	cronjoblog.Info("default", "name", r.Name)
 	if r.Spec.ConcurrencyPolicy == "" {
 		r.Spec.ConcurrencyPolicy = AllowConcurrent
