@@ -1,6 +1,6 @@
 
 # Image URL to use all building/pushing image targets
-IMG ?= localhost:5000/yueyue-controller:latest
+IMG ?= controller:latest
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
 ENVTEST_K8S_VERSION = 1.27.1
 
@@ -163,5 +163,7 @@ $(ENVTEST): $(LOCALBIN)
 	test -s $(LOCALBIN)/setup-envtest || GOBIN=$(LOCALBIN) go install sigs.k8s.io/controller-runtime/tools/setup-envtest@latest
 
 # .PHONY: ko-image
-ko-image: ## KO_DOCKER_REPO=localhost:5000 ko build cmd/main.go -t ${IMG}
-	KO_DOCKER_REPO=localhost:5000 ko build . -B -t latest
+.PHONY: ko-image
+ko-image: manifests generate fmt vet## KO_DOCKER_REPO=localhost:5000 ko build . -B -v -t latest
+	KO_DOCKER_REPO=localhost:5000/manager ko build -B ./cmd -t latest
+# KO_DOCKER_REPO=localhost:5000 ko build cmd/main.go -B bin/manager -t latest
