@@ -10,7 +10,7 @@ metadata:
   uid: d4fab889-2fbe-497f-9fb9-f1fb5276afb1
 spec:
   containers:
-  - image: localhost:5000/main.go-3002d695552ec7e7ebbaaf04a21d3439:latest
+  - image: localhost:5000/manager/cmd:latest
     imagePullPolicy: Always
     name: yue
     resources: {}

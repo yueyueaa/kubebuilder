@@ -1,6 +1,6 @@
 
 # Image URL to use all building/pushing image targets
-IMG ?= controller:latest
+IMG ?= localhost:5000/manager/cmd:latest
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
 ENVTEST_K8S_VERSION = 1.27.1
 
@@ -165,5 +165,5 @@ $(ENVTEST): $(LOCALBIN)
 # .PHONY: ko-image
 .PHONY: ko-image
 ko-image:  manifests generate fmt vet ## KO_DOCKER_REPO=localhost:5000 ko build . -B -v -t latest
-	KO_DOCKER_REPO=localhost:5000/manager ko build -B ./cmd --platform linux/arm64,linux/amd64 -t latest
+	KO_DOCKER_REPO=localhost:5000/manager KO_DEFAULTBASEIMAGE=debian:bullseye-20230502 ko build -B ./cmd --platform linux/arm64,linux/amd64 -t latest
 # KO_DOCKER_REPO=localhost:5000 ko build cmd/main.go -B bin/manager -t latest
