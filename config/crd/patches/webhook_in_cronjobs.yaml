@@ -10,7 +10,7 @@ spec:
       clientConfig:
         service:
           namespace: default
-          name: denyenv
+          name: yueyuea-webhook-service 
           path: /convert
       conversionReviewVersions:
       - v1
