@@ -1,13 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  creationTimestamp: "2023-08-02T06:37:13Z"
   labels:
     run: app
   name: app
   namespace: default
-  resourceVersion: "1021"
-  uid: acbf3fd3-efa9-4928-ada1-5330643a70ec
+  resourceVersion: "662875"
 spec:
   containers:
   - image: localhost:5000/manager/cmd:latest
@@ -18,11 +16,10 @@ spec:
     terminationMessagePolicy: File
     volumeMounts:
     - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-      name: kube-api-access-q2hs4
+      name: kube-api-access-vbl4g
       readOnly: true
   dnsPolicy: ClusterFirst
   enableServiceLinks: true
-  nodeName: k3d-k3d-agent-1
   preemptionPolicy: PreemptLowerPriority
   priority: 0
   restartPolicy: Always
@@ -41,7 +38,7 @@ spec:
     operator: Exists
     tolerationSeconds: 300
   volumes:
-  - name: kube-api-access-q2hs4
+  - name: kube-api-access-vbl4g
     projected:
       defaultMode: 420
       sources:

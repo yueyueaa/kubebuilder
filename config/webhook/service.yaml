@@ -1,15 +1,14 @@
-
 apiVersion: v1
 kind: Service
 metadata:
   labels:
     app.kubernetes.io/name: service
-    app.kubernetes.io/instance: yueyuea-webhook-service
+    app.kubernetes.io/instance: webhook-service
     app.kubernetes.io/component: webhook
     app.kubernetes.io/created-by: yueyuea
     app.kubernetes.io/part-of: yueyuea
     app.kubernetes.io/managed-by: kustomize
-  name: yueyuea-webhook-service
+  name: webhook-service
   namespace: default
 spec:
   ports:

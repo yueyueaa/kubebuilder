@@ -167,3 +167,7 @@ $(ENVTEST): $(LOCALBIN)
 ko-image:  manifests generate fmt vet ## KO_DOCKER_REPO=localhost:5000 ko build . -B -v -t latest
 	KO_DOCKER_REPO=localhost:5000/manager KO_DEFAULTBASEIMAGE=debian:bullseye-20230502 ko build -B ./cmd --platform linux/arm64,linux/amd64 -t latest
 # KO_DOCKER_REPO=localhost:5000 ko build cmd/main.go -B bin/manager -t latest
+
+save-cert:
+	kubectl get secret serving-cert  -o jsonpath={.data.'tls\.crt'} | base64 -d > /tmp/k8s-webhook-server/serving-certs/tls.crt
+	kubectl get secret serving-cert  -o jsonpath={.data.'tls\.key'} | base64 -d > /tmp/k8s-webhook-server/serving-certs/tls.key
