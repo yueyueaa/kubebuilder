@@ -1,11 +1,13 @@
 # yueyuea
-// TODO(user): Add simple overview of use/purpose
 
-## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+## Prepare In Advance
+You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) or [K3D](https://k3d.io/v5.5.2) to get a local cluster for testing, or run against a remote cluster.
+
+Tips: Recommended to use k3d to quickly build k8s cluster (https://github.com/yueyueaa/k8s-setup/blob/master/k3d/README.md) `bash k3d.sh`
+
+If you use webhook, you need install cert-manager to your cluster (https://cert-manager.io/docs/installation)
 
 ## Getting Started
-You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
 **Note:** Your controller will automatically use the current context in your kubeconfig file (i.e. whatever cluster `kubectl cluster-info` shows).
 
 ### Running on the cluster
@@ -21,11 +23,18 @@ kubectl apply -f config/samples/
 make docker-build docker-push IMG=<some-registry>/yueyuea:tag
 ```
 
+Tips: 
+- If you use `bash k3d.sh` create cluster, your registry is `localhost:5000`
+- If you can't use make docker-build and make docker-push, you can use `make ko-image` to quickly build image (https://ko.build/)
+
 3. Deploy the controller to the cluster with the image specified by `IMG`:
 
 ```sh
 make deploy IMG=<some-registry>/yueyuea:tag
 ```
+
+Tips:
+- To make it easier to package and deploy controller/operator to the cluster, you can use `make all`, then you can apply yaml to cluster
 
 ### Uninstall CRDs
 To delete the CRDs from the cluster:
@@ -41,29 +50,11 @@ UnDeploy the controller from the cluster:
 make undeploy
 ```
 
-## Contributing
-// TODO(user): Add detailed information on how you would like others to contribute to this project
-
 ### How it works
 This project aims to follow the Kubernetes [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/).
 
 It uses [Controllers](https://kubernetes.io/docs/concepts/architecture/controller/),
 which provide a reconcile function responsible for synchronizing resources until the desired state is reached on the cluster.
-
-### Test It Out
-1. Install the CRDs into the cluster:
-
-```sh
-make install
-```
-
-2. Run your controller (this will run in the foreground, so switch to a new terminal if you want to leave it running):
-
-```sh
-make run
-```
-
-**NOTE:** You can also run this in one step by running: `make install run`
 
 ### Modifying the API definitions
 If you are editing the API definitions, generate the manifests such as CRs or CRDs using:
