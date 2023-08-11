@@ -5,6 +5,18 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
   - batch
   resources:
   - jobs
@@ -22,6 +34,32 @@ rules:
   - jobs/status
   verbs:
   - get
+- apiGroups:
+  - batch.tutorial.kubebuilder.io
+  resources:
+  - apps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - batch.tutorial.kubebuilder.io
+  resources:
+  - apps/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - batch.tutorial.kubebuilder.io
+  resources:
+  - apps/status
+  verbs:
+  - get
+  - patch
+  - update
 - apiGroups:
   - batch.tutorial.kubebuilder.io
   resources:
