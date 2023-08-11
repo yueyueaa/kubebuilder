@@ -164,7 +164,7 @@ $(ENVTEST): $(LOCALBIN)
 
 # .PHONY: ko-image
 .PHONY: ko-image
-ko-image: manifests generate fmt vet ## KO_DOCKER_REPO=localhost:5000 ko build . -B -v -t latest
+ko-image: ## KO_DOCKER_REPO=localhost:5000 ko build . -B -v -t latest
 	KO_DOCKER_REPO=localhost:5000/manager KO_DEFAULTBASEIMAGE=debian:bullseye-20230502 ko build -B ./cmd --platform linux/arm64,linux/amd64 -t latest
 # KO_DOCKER_REPO=localhost:5000 ko build cmd/main.go -B bin/manager -t latest
 
@@ -174,4 +174,4 @@ save-cert:
 
 
 .PHONY: all
-all: manifests install build ko-image deploy
+all: install build ko-image deploy
