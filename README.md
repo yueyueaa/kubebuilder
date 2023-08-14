@@ -25,7 +25,7 @@ make docker-build docker-push IMG=<some-registry>/yueyuea:tag
 
 Tips: 
 - If you use `bash k3d.sh` create cluster, your registry is `localhost:5000`
-- If you can't use make docker-build and make docker-push, you can use `make ko-image` to quickly build image (https://ko.build/)
+- If you can't use `make docker-build` or `make docker-push`, you can try `make ko-image` to quickly build image (https://ko.build/)
 
 **NOTE:** Run `make --help` for more information on all potential `make` targets
 
@@ -42,8 +42,8 @@ Tips:
 To delete the CRDs from the cluster:
 
 ```sh
-make uninstall  #delete the CRDs from the cluster
-make undeploy   #delete the controller from the cluster
+make uninstall  # delete the CRDs from the cluster
+make undeploy   # delete the controller from the cluster
 ```
 
 ### How it works
