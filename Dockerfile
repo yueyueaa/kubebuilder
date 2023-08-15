@@ -4,7 +4,6 @@ ARG TARGETOS
 ARG TARGETARCH
 
 # ENV GOPROXY=https://proxy.golang.com.cn,direct
-# ENV GOPROXY=goproxy.cn,direct
 ENV GOPROXY=https://goproxy.io,direct
 
 WORKDIR /workspace
