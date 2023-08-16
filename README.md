@@ -1,6 +1,6 @@
 # yueyuea
 
-[![pPlnZz4.png](https://s1.ax1x.com/2023/08/16/pPlnZz4.png)](https://imgse.com/i/pPlnZz4)
+[![pP1KRtx.png](https://s1.ax1x.com/2023/08/17/pP1KRtx.png)](https://imgse.com/i/pP1KRtx)
 
 ## Prepare In Advance
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) or [K3D](https://k3d.io/v5.5.2) to get a local cluster for testing, or run against a remote cluster.
