@@ -1,5 +1,6 @@
 # yueyuea
 
+```mermaid
 sequenceDiagram
 kubectl->>k8s-apiserver: 1.资源合法性验证 
 kubectl->>k8s-apiserver: 2.封装HTTP请求 
@@ -35,6 +36,7 @@ CRI->>Pod: 创建pause container、pull image
 CRI->>Pod: 添加元数据、create 业务container
 CNI->>Pod: 分配IP
 CNI->>kubelet: Return json
+```
 
 
 ## Prepare In Advance
