@@ -1,6 +1,41 @@
 # yueyuea
 
-[![pP1KRtx.png](https://s1.ax1x.com/2023/08/17/pP1KRtx.png)](https://imgse.com/i/pP1KRtx)
+sequenceDiagram
+kubectl->>k8s-apiserver: 1.资源合法性验证 
+kubectl->>k8s-apiserver: 2.封装HTTP请求 
+kubectl->>k8s-apiserver: 3.客户端认证 
+kubectl->>k8s-apiserver: 4.发送HTTP请求
+loop apiserver
+    k8s-apiserver->>k8s-apiserver: 1.认证(authentication) 授权(authorization)
+    k8s-apiserver->>k8s-apiserver: 2.*准入控制(admission controller)
+end
+
+loop controller-manager
+    controller manager->>controller manager: 1.Deployment controller (adjust RS)
+    controller manager->>controller manager: 2.ReplicaSet controller (adjust Pod)
+end
+
+scheduler->>k8s-apiserver: 1.创建一个binding对象
+scheduler->>k8s-apiserver: 2.发送POST请求
+loop scheduler
+    scheduler->>scheduler: 1.Scheduler将pod调度到某节点
+    scheduler->>scheduler: 2.kubelet接管pod并开始部署
+end
+
+k8s-apiserver->>kubelet: 1.添加NodeName值
+k8s-apiserver->>kubelet: 2.添加相关注释(annotations)
+k8s-apiserver->>kubelet: 3.PodScheduled的status设置为True
+
+loop kubelet
+    kubelet->>kubelet: 处理Scheduler下发到本节点的Pod并管理生命周期
+end
+
+kubelet->>CRI: 通过容器运行时启动容器
+CRI->>Pod: 创建pause container、pull image
+CRI->>Pod: 添加元数据、create 业务container
+CNI->>Pod: 分配IP
+CNI->>kubelet: Return json
+
 
 ## Prepare In Advance
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) or [K3D](https://k3d.io/v5.5.2) to get a local cluster for testing, or run against a remote cluster.
