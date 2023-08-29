@@ -14,7 +14,7 @@ spec:
     singular: cronjob
   scope: Namespaced
   versions:
-  - name: v1
+  - name: v2
     schema:
       openAPIV3Schema:
         description: CronJob is the Schema for the cronjobs API
@@ -32,30 +32,38 @@ spec:
           metadata:
             type: object
           spec:
-            description: CronJobSpec defines the desired state of CronJob
+            description: "We'll leave our spec largely unchanged, except to change
+              the schedule field to a new type. \n CronJobSpec defines the desired
+              state of CronJob"
             properties:
               concurrencyPolicy:
+                description: 'Specifies how to treat concurrent executions of a Job.
+                  Valid values are: - "Allow" (default): allows CronJobs to run concurrently;
+                  - "Forbid": forbids concurrent runs, skipping next run if previous
+                  run hasn''t finished yet; - "Replace": cancels currently running
+                  job and replaces it with a new one'
+                enum:
+                - Allow
+                - Forbid
+                - Replace
                 type: string
               failedJobsHistoryLimit:
+                description: The number of failed finished jobs to retain. This is
+                  a pointer to distinguish between explicit zero and not specified.
                 format: int32
+                minimum: 0
                 type: integer
-              foo:
-                description: Foo is an example field of CronJob. Edit cronjob_types.go
-                  to remove/update
-                type: string
               jobTemplate:
+                description: Specifies the job that will be created when executing
+                  a CronJob.
                 properties:
-                  annotations:
-                    additionalProperties:
-                      type: string
-                    type: object
-                  labels:
-                    additionalProperties:
-                      type: string
+                  metadata:
+                    description: 'Standard object''s metadata of the jobs created
+                      from this template. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata'
                     type: object
                   spec:
-                    description: JobSpec describes how the job execution will look
-                      like.
+                    description: 'Specification of the desired behavior of the job.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status'
                     properties:
                       activeDeadlineSeconds:
                         description: Specifies the duration in seconds relative to
@@ -8637,22 +8645,52 @@ spec:
                     type: object
                 type: object
               schedule:
-                type: string
+                description: The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
+                properties:
+                  dayOfMonth:
+                    description: specifies the day of the month during which the job
+                      executes.
+                    type: string
+                  dayOfWeek:
+                    description: specifies the day of the week during which the job
+                      executes.
+                    type: string
+                  hour:
+                    description: specifies the hour during which the job executes.
+                    type: string
+                  minute:
+                    description: specifies the minute during which the job executes.
+                    type: string
+                  month:
+                    description: specifies the month during which the job executes.
+                    type: string
+                type: object
               startingDeadlineSeconds:
+                description: Optional deadline in seconds for starting the job if
+                  it misses scheduled time for any reason.  Missed jobs executions
+                  will be counted as failed ones.
                 format: int64
+                minimum: 0
                 type: integer
               successfulJobsHistoryLimit:
+                description: The number of successful finished jobs to retain. This
+                  is a pointer to distinguish between explicit zero and not specified.
                 format: int32
+                minimum: 0
                 type: integer
               suspend:
-                description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-                  Important: Run "make" to regenerate code after modifying this file'
+                description: This flag tells the controller to suspend subsequent
+                  executions, it does not apply to already started executions.  Defaults
+                  to false.
                 type: boolean
+            required:
+            - schedule
             type: object
           status:
             description: CronJobStatus defines the observed state of CronJob
             properties:
               active:
+                description: A list of pointers to currently running jobs.
                 items:
                   description: "ObjectReference contains enough information to let
                     you inspect or modify the referred object. --- New uses of this
@@ -8715,7 +8753,9 @@ spec:
                   type: object
                   x-kubernetes-map-type: atomic
                 type: array
-              last_schedule_time:
+              lastScheduleTime:
+                description: Information when was the last time the job was successfully
+                  scheduled.
                 format: date-time
                 type: string
             type: object

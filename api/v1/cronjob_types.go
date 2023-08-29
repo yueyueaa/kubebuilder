@@ -22,26 +22,36 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-type JobTemplate struct {
-	Spec        kbatch.JobSpec    `json:"spec,omitempty"`
-	Annotations map[string]string `json:"annotations,omitempty"`
-	Labels      map[string]string `json:"labels,omitempty"`
-}
-
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+
+// +kubebuilder:docs-gen:collapse=Imports
+// +kubebuilder:validation:Enum=Allow;Forbid;Replace
+type ConcurrencyPolicy string
+
+const (
+	// AllowConcurrent allows CronJobs to run concurrently.
+	AllowConcurrent ConcurrencyPolicy = "Allow"
+
+	// ForbidConcurrent forbids concurrent runs, skipping next run if previous
+	// hasn't finished yet.
+	ForbidConcurrent ConcurrencyPolicy = "Forbid"
+
+	// ReplaceConcurrent cancels currently running job and replaces it with a new one.
+	ReplaceConcurrent ConcurrencyPolicy = "Replace"
+)
 
 // CronJobSpec defines the desired state of CronJob
 type CronJobSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Suspend                    *bool       `json:"suspend,omitempty"`
-	Schedule                   string      `json:"schedule,omitempty"`
-	StartingDeadlineSeconds    *int64      `json:"startingDeadlineSeconds,omitempty"`
-	FailedJobsHistoryLimit     *int32      `json:"failedJobsHistoryLimit,omitempty"`
-	SuccessfulJobsHistoryLimit *int32      `json:"successfulJobsHistoryLimit,omitempty"`
-	ConcurrencyPolicy          string      `json:"concurrencyPolicy,omitempty"`
-	JobTemplate                JobTemplate `json:"jobTemplate,omitempty"`
+	Suspend                    *bool                  `json:"suspend,omitempty"`
+	Schedule                   string                 `json:"schedule,omitempty"`
+	StartingDeadlineSeconds    *int64                 `json:"startingDeadlineSeconds,omitempty"`
+	FailedJobsHistoryLimit     *int32                 `json:"failedJobsHistoryLimit,omitempty"`
+	SuccessfulJobsHistoryLimit *int32                 `json:"successfulJobsHistoryLimit,omitempty"`
+	ConcurrencyPolicy          ConcurrencyPolicy      `json:"concurrencyPolicy,omitempty"`
+	JobTemplate                kbatch.JobTemplateSpec `json:"jobTemplate,omitempty"`
 	// Foo is an example field of CronJob. Edit cronjob_types.go to remove/update
 	Foo string `json:"foo,omitempty"`
 }
@@ -53,6 +63,8 @@ type CronJobStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
+
+// +kubebuilder:docs-gen:collapse=old stuff
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
@@ -78,3 +90,5 @@ type CronJobList struct {
 func init() {
 	SchemeBuilder.Register(&CronJob{}, &CronJobList{})
 }
+
+// +kubebuilder:docs-gen:collapse=old stuff
