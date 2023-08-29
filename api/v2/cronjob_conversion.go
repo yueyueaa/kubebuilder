@@ -27,7 +27,7 @@ import (
 
 	"sigs.k8s.io/controller-runtime/pkg/conversion"
 
-	v1 "tutorial.kubebuilder.io/project/api/v1"
+	"tutorial.kubebuilder.io/project/api/v1"
 )
 
 // +kubebuilder:docs-gen:collapse=Imports
@@ -74,13 +74,12 @@ func (src *CronJob) ConvertTo(dstRaw conversion.Hub) error {
 
 	// Spec
 	dst.Spec.StartingDeadlineSeconds = src.Spec.StartingDeadlineSeconds
-	// dst.Spec.ConcurrencyPolicy = v1.ConcurrencyPolicy(src.Spec.ConcurrencyPolicy)
-	dst.Spec.ConcurrencyPolicy = string(src.Spec.ConcurrencyPolicy)
+	dst.Spec.ConcurrencyPolicy = v1.ConcurrencyPolicy(src.Spec.ConcurrencyPolicy)
 	dst.Spec.Suspend = src.Spec.Suspend
-	// dst.Spec.JobTemplate = src.Spec.JobTemplate
-	dst.Spec.JobTemplate.Labels = src.Spec.JobTemplate.Labels
-	dst.Spec.JobTemplate.Annotations = src.Spec.JobTemplate.Annotations
-	dst.Spec.JobTemplate.Spec = src.Spec.JobTemplate.Spec
+	dst.Spec.JobTemplate = src.Spec.JobTemplate
+	// dst.Spec.JobTemplate.Labels = src.Spec.JobTemplate.Labels
+	// dst.Spec.JobTemplate.Annotations = src.Spec.JobTemplate.Annotations
+	// dst.Spec.JobTemplate.Spec = src.Spec.JobTemplate.Spec
 	dst.Spec.SuccessfulJobsHistoryLimit = src.Spec.SuccessfulJobsHistoryLimit
 	dst.Spec.FailedJobsHistoryLimit = src.Spec.FailedJobsHistoryLimit
 
@@ -128,9 +127,10 @@ func (dst *CronJob) ConvertFrom(srcRaw conversion.Hub) error {
 	dst.Spec.StartingDeadlineSeconds = src.Spec.StartingDeadlineSeconds
 	dst.Spec.ConcurrencyPolicy = ConcurrencyPolicy(src.Spec.ConcurrencyPolicy)
 	dst.Spec.Suspend = src.Spec.Suspend
-	dst.Spec.JobTemplate.Labels = src.Spec.JobTemplate.Labels
-	dst.Spec.JobTemplate.Annotations = src.Spec.JobTemplate.Annotations
-	dst.Spec.JobTemplate.Spec = src.Spec.JobTemplate.Spec
+	dst.Spec.JobTemplate = src.Spec.JobTemplate
+	// dst.Spec.JobTemplate.Labels = src.Spec.JobTemplate.Labels
+	// dst.Spec.JobTemplate.Annotations = src.Spec.JobTemplate.Annotations
+	// dst.Spec.JobTemplate.Spec = src.Spec.JobTemplate.Spec
 	dst.Spec.SuccessfulJobsHistoryLimit = src.Spec.SuccessfulJobsHistoryLimit
 	dst.Spec.FailedJobsHistoryLimit = src.Spec.FailedJobsHistoryLimit
 

@@ -14,7 +14,7 @@ spec:
     singular: app
   scope: Namespaced
   versions:
-  - name: v1
+  - name: v2
     schema:
       openAPIV3Schema:
         description: App is the Schema for the apps API

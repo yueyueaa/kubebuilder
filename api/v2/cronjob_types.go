@@ -27,12 +27,6 @@ import (
 
 // +kubebuilder:docs-gen:collapse=Imports
 
-type JobTemplate struct {
-	Spec        batchv1.JobSpec   `json:"spec,omitempty"`
-	Annotations map[string]string `json:"annotations,omitempty"`
-	Labels      map[string]string `json:"labels,omitempty"`
-}
-
 /*
 We'll leave our spec largely unchanged, except to change the schedule field to a new type.
 */
@@ -62,7 +56,7 @@ type CronJobSpec struct {
 	Suspend *bool `json:"suspend,omitempty"`
 
 	// Specifies the job that will be created when executing a CronJob.
-	JobTemplate JobTemplate `json:"jobTemplate,omitempty"`
+	JobTemplate batchv1.JobTemplateSpec `json:"jobTemplate,omitempty"`
 
 	// +kubebuilder:validation:Minimum=0
 

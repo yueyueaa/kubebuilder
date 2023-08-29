@@ -102,13 +102,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controller.AppReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "App")
-		os.Exit(1)
-	}
+	// if err = (&controller.AppReconciler{
+	// 	Client: mgr.GetClient(),
+	// 	Scheme: mgr.GetScheme(),
+	// }).SetupWithManager(mgr); err != nil {
+	// 	setupLog.Error(err, "unable to create controller", "controller", "App")
+	// 	os.Exit(1)
+	// }
 
 	// if err = (&batchv1.CronJob{}).SetupWebhookWithManager(mgr); err != nil {
 	// 	setupLog.Error(err, "unable to create webhook", "webhook", "CronJob")
