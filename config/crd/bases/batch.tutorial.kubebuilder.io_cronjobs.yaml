@@ -57,17 +57,13 @@ spec:
                 description: Specifies the job that will be created when executing
                   a CronJob.
                 properties:
-                  annotations:
-                    additionalProperties:
-                      type: string
-                    type: object
-                  labels:
-                    additionalProperties:
-                      type: string
+                  metadata:
+                    description: 'Standard object''s metadata of the jobs created
+                      from this template. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata'
                     type: object
                   spec:
-                    description: JobSpec describes how the job execution will look
-                      like.
+                    description: 'Specification of the desired behavior of the job.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status'
                     properties:
                       activeDeadlineSeconds:
                         description: Specifies the duration in seconds relative to

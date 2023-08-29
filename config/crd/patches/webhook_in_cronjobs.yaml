@@ -13,4 +13,5 @@ spec:
           name: yueyuea-webhook-service 
           path: /convert
       conversionReviewVersions:
+      - v2
       - v1
